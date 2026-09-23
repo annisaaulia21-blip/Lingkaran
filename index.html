@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi Lingkaran - Kelas 8</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--accent:#4f46e5;--soft:#eef2ff;--border:#dfe3eb;--good:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.container{max-width:850px;margin:auto;padding:22px}.hero,.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:18px}
+.hero{display:flex;justify-content:space-between;gap:15px;align-items:center}.eyebrow{color:var(--accent);font-weight:700;font-size:13px}
+h1{margin:4px 0;font-size:30px}h2{font-size:21px;margin:0 0 12px}h3{font-size:18px}
+.muted{color:var(--muted);font-size:14px}.score{border:1px solid var(--border);border-radius:14px;padding:10px 18px;text-align:center;min-width:90px}.score small{display:block;color:var(--muted)}.score strong{font-size:25px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.three{grid-template-columns:repeat(3,1fr)}
+.info{border:1px solid var(--border);border-radius:13px;padding:13px}.highlight{background:var(--soft);padding:13px;border-radius:13px}
+svg{max-width:300px;width:100%;display:block;margin:auto}
+input[type=range]{width:100%;accent-color:var(--accent)}
+button{min-height:44px;border-radius:12px;padding:10px 15px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;font-size:15px}
+button:hover{background:#f8f9fc}button:disabled{cursor:not-allowed;opacity:.6}.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.answer{text-align:left;width:100%}
+.feedback{margin-top:12px;font-weight:600;min-height:24px}.good{color:var(--good)}.bad{color:var(--bad)}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.hidden{display:none}.finish{text-align:center}.trophy{font-size:44px}
+@media(max-width:600px){.hero{align-items:flex-start}.grid,.three{grid-template-columns:1fr}h1{font-size:25px}.container{padding:14px}}
+</style>
+</head>
+<body>
+<main class="container">
+<section class="hero">
+  <div>
+    <div class="eyebrow">MATEMATIKA • KELAS 8</div>
+    <h1>🎯 Misi Lingkaran</h1>
+    <div class="muted">Belajar dan berlatih menghitung keliling serta luas lingkaran.</div>
+  </div>
+  <div class="score"><small>SKOR</small><strong id="score">0</strong></div>
+</section>
+
+<section class="card">
+<h2>📚 Misi 1 — Kenali Lingkaran</h2>
+<div class="grid">
+<div>
+<svg viewBox="0 0 300 210" aria-label="Diagram lingkaran">
+<circle cx="150" cy="105" r="72" fill="none" stroke="#4f46e5" stroke-width="3"/>
+<line x1="150" y1="105" x2="222" y2="105" stroke="#15803d" stroke-width="4"/>
+<line x1="78" y1="105" x2="222" y2="105" stroke="#b91c1c" stroke-width="2" stroke-dasharray="7 5"/>
+<circle cx="150" cy="105" r="4" fill="#172033"/>
+<text x="178" y="97" font-size="16" fill="#15803d">r</text>
+<text x="143" y="88" font-size="15" fill="#b91c1c">d</text>
+<text x="128" y="128" font-size="13">pusat</text>
+</svg>
+</div>
+<div>
+<div class="info"><b>Jari-jari (r)</b><br>Jarak dari pusat ke tepi lingkaran.</div><br>
+<div class="info"><b>Diameter (d)</b><br>Garis yang melewati pusat dan menghubungkan dua titik pada lingkaran.<br><b>d = 2r</b></div><br>
+<div class="highlight"><b>💡 Ingat!</b><br>Gunakan π = 22/7 jika r atau d sesuai untuk penggunaan 22/7. Selain itu, gunakan π = 3,14.</div>
+</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🔍 Misi 2 — Eksperimen</h2>
+<p class="muted">Geser jari-jari dan amati perubahan diameter serta keliling.</p>
+<label for="radius"><b>Jari-jari: <span id="rval">7</span> cm</b></label>
+<input id="radius" type="range" min="1" max="14" value="7">
+<div class="grid three" style="margin-top:15px">
+<div class="info" style="text-align:center"><small>Jari-jari</small><br><b id="rout">7 cm</b></div>
+<div class="info" style="text-align:center"><small>Diameter</small><br><b id="dout">14 cm</b></div>
+<div class="info" style="text-align:center"><small>Keliling</small><br><b id="cout">44 cm</b></div>
+</div>
+<div class="highlight" style="margin-top:14px"><b>Rumus keliling:</b> K = 2πr atau K = πd</div>
+</section>
+
+<section class="card">
+<h2>🧠 Misi 3 — Tantangan</h2>
+<div id="quiz"></div>
+<div class="actions">
+<button id="next" class="primary">Soal berikutnya →</button>
+<button id="restart">🔄 Ulangi kuis</button>
+</div>
+<div id="feedback" class="feedback" aria-live="polite"></div>
+</section>
+
+<section id="finish" class="card finish hidden">
+<div class="trophy">🏆</div>
+<h2>Misi selesai!</h2>
+<p id="final"></p>
+<p class="muted">Target pembelajaran: mampu menentukan apakah soal meminta keliling atau luas, memilih rumus yang tepat, menghitung dengan teliti, dan menuliskan satuan dengan benar.</p>
+</section>
+</main>
+
+<script>
+(function(){
+const scoreEl=document.getElementById("score"),slider=document.getElementById("radius");
+const qs=[
+{q:"Sebuah taman berbentuk lingkaran memiliki jari-jari 7 m. Berapa keliling taman tersebut?",a:["22 m","44 m","49 m","154 m"],c:1,e:"K = 2 × 22/7 × 7 = 44 m."},
+{q:"Sebuah pizza berbentuk lingkaran memiliki diameter 28 cm. Berapa luas pizza?",a:["88 cm²","176 cm²","616 cm²","1.232 cm²"],c:2,e:"r = 14 cm, sehingga L = 22/7 × 14² = 616 cm²."},
+{q:"Sebuah meja bundar memiliki diameter 1,4 m. Berapa keliling tepinya?",a:["2,2 m","4,4 m","6,16 m","8,8 m"],c:1,e:"K = πd = 22/7 × 1,4 = 4,4 m."},
+{q:"Sebuah kolam berbentuk lingkaran memiliki jari-jari 10 m. Berapa luas permukaannya? Gunakan π = 3,14.",a:["31,4 m²","62,8 m²","314 m²","628 m²"],c:2,e:"L = πr² = 3,14 × 100 = 314 m²."},
+{q:"Sebuah roda memiliki keliling 88 cm. Jika π = 22/7, berapa jari-jarinya?",a:["7 cm","14 cm","21 cm","28 cm"],c:1,e:"88 = 2 × 22/7 × r, maka r = 14 cm."}
+];
+let idx=0,score=0,answered=false;
+
+function updateCircle(){
+ const r=Number(slider.value),d=2*r,k=2*Math.PI*r;
+ document.getElementById("rval").textContent=r;
+ document.getElementById("rout").textContent=r+" cm";
+ document.getElementById("dout").textContent=d+" cm";
+ document.getElementById("cout").textContent=(Math.abs(k-Math.round(k))<0.01?Math.round(k):k.toFixed(2))+" cm";
+}
+slider.addEventListener("input",updateCircle);updateCircle();
+
+function render(){
+ const x=qs[idx];answered=false;
+ document.getElementById("quiz").innerHTML="<p><b>"+(idx+1)+".</b> "+x.q+"</p>"+
+ '<div class="grid">'+x.a.map((v,i)=>'<button class="answer" data-i="'+i+'">'+v+"</button>").join("")+"</div>";
+ document.getElementById("feedback").textContent="";
+ document.getElementById("feedback").className="feedback";
+ document.querySelectorAll(".answer").forEach(btn=>btn.addEventListener("click",function(){
+   if(answered)return;answered=true;
+   const ok=Number(this.dataset.i)===x.c;
+   if(ok){score+=20;scoreEl.textContent=score;document.getElementById("feedback").textContent="✅ Benar! "+x.e;document.getElementById("feedback").className="feedback good";}
+   else{document.getElementById("feedback").textContent="❌ Belum tepat. "+x.e;document.getElementById("feedback").className="feedback bad";}
+   document.querySelectorAll(".answer").forEach(b=>b.disabled=true);
+ }));
+}
+document.getElementById("next").addEventListener("click",function(){
+ if(!answered){document.getElementById("feedback").textContent="Pilih jawaban terlebih dahulu.";return;}
+ if(idx<qs.length-1){idx++;render();}
+ else{
+   document.getElementById("finish").classList.remove("hidden");
+   document.getElementById("final").textContent="Skor kamu: "+score+"/100. "+(score>=80?"Mantap! Kamu sudah menguasai dasar keliling dan luas lingkaran.":"Ayo coba lagi. Perhatikan pemilihan rumus, perhitungan, dan satuannya.");
+   this.disabled=true;
+   document.getElementById("finish").scrollIntoView({behavior:"smooth"});
+ }
+});
+document.getElementById("restart").addEventListener("click",function(){
+ idx=0;score=0;scoreEl.textContent="0";document.getElementById("finish").classList.add("hidden");
+ document.getElementById("next").disabled=false;render();
+});
+render();
+})();
+</script>
+</body>
+</html>
